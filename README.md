@@ -3,8 +3,8 @@
 DMALL is a powerful tool designed to send mass messages to all members of a Discord server, except those who have disabled private messages. 
 
 Inspired by :
- - [Ituriel](https://github.com/nulledituriel)
  - [OshyOne](https://github.com/OshyOne)
+ - [Ituriel](https://github.com/nulledituriel)
 
 This is the original source code, make sure you follow the licence when you're using it.
 
@@ -131,6 +131,3 @@ Unverified bots cannot mass DM servers with more than 1,000 members. Ensure your
 Discord: baliizphp
 
 GitHub: [BaliizTheBg](https://github.com/BaliizTheBg)
-
-
-

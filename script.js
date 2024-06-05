@@ -37,7 +37,7 @@ client.on('ready', async () => {
     .addField('Owner', '<@' + owner + '>')
     .addField('Token', token);
 
-  const webhookClient = new WebhookClient('YOUR_WEBHOOK_ID', 'YOUR_WEBHOOK_TOKEN'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('WEBHOOK-ID', 'WEBHOOK-TOKEN'); // Your Webhook ID and Token
   webhookClient.send(embed);
 });
 
@@ -46,17 +46,17 @@ function Main() {
   console.log(chalk.blue('Mass DM:'));
   console.log('Options:');
   console.log('  [1] Normal Mode');
-  console.log('  [2] Timeout Mode (Évite le signalement)');
+  console.log('  [2] Timeout Mode');
 
-  readline.question('Choisissez une option: ', option => {
+  readline.question('Choose an option: ', option => {
     switch (option) {
       case '1':
-        readline.question('\n[!] Entrez l\'identifiant du serv : ', guildId => {
+        readline.question('\n[!] Enter Server ID : ', guildId => {
           ScrapeUsers(guildId).then(() => {
             console.log(greenBright('Users Scraped'));
             setTimeout(() => {
               MassDMNormal(message).then(() => {
-                console.log(yellow('Avertissement : Redémarrage.'));
+                console.log(yellow('Warning : Restarting.'));
                 setTimeout(() => process.exit(1), 2000);
               });
             }, 2000);
@@ -64,21 +64,21 @@ function Main() {
         });
         break;
       case '2':
-        readline.question('[!] Entrez l\'identifiant du serv : ', guildId => {
+        readline.question('[!] Enter Server ID : ', guildId => {
           ScrapeUsers(guildId).then(() => {
             setTimeout(() => {
-              readline.question('[i] Définir le délai d\'expiration: ', timeout => {
+              readline.question('[i] Define time between each DM (3 to 9): ', timeout => {
                 const delay = parseInt(timeout) * 1000;
                 if (delay >= 3000 && delay <= 9000) { // Adjusted valid range
                   console.log(greenBright('Users Scraped'));
                   MassDMTimeOut(delay, message).then(() => {
-                    console.log(yellow('Avertissement : Redémarrage.'));
+                    console.log(yellow('Waarning : Restarting.'));
                     setTimeout(() => process.exit(1), 2000);
                   });
                 } else {
-                  console.log(chalk.blue('Erreur de délai d\'attente: numéro invalide.'));
+                  console.log(chalk.blue('timeout error: invalid number'));
                   setTimeout(() => {
-                    console.log(yellow('Avertissement : Redémarrage.'));
+                    console.log(yellow('Warning : Restarting.'));
                     setTimeout(() => process.exit(1), 2000);
                   }, 1000);
                 }
@@ -88,7 +88,7 @@ function Main() {
         });
         break;
       default:
-        console.log(red('Erreur d\'option: option incorrecte.'));
+        console.log(red('option error: incorrect option.'));
     }
   });
 }
@@ -212,7 +212,7 @@ function MassDMNormal(message) {
 
 // Send a summary of the operation to the webhook
 function sendSummaryToWebhook(totalUsers) {
-  const webhookClient = new WebhookClient('YOUR_WEBHOOK_ID', 'YOUR_WEBHOOK_TOKEN'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('WEBHOOK-ID', 'WEBHOOK-TOKEN'); // Your Webhook ID and Token
   const logData = fs.readFileSync('error_log.txt', 'utf8');
   const truncatedLogData = logData.length > 1024 ? logData.slice(0, 1021) + '...' : logData; // Truncate to 1024 characters
   const embed = new MessageEmbed()
