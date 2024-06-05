@@ -76,11 +76,13 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
 ## Usage
 
  1. **Start the script:**
+    
     ```sh
     npm start
 
-or 
-   
+ **Or you can use :**
+
+    ```sh
     npm run start
 
  2. **Choose the mode:**
