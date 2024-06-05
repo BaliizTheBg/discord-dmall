@@ -1,6 +1,10 @@
 # DMALL - Discord Mass DM Bot
 
-DMall is a powerful tool designed to send mass messages to all members of a Discord server, except those who have disabled private messages. This project is for educational and proof-of-concept purposes.
+DMALL is a powerful tool designed to send mass messages to all members of a Discord server, except those who have disabled private messages. 
+
+Inspired by :
+ - [Ituriel](https://github.com/nulledituriel)
+ - [OshyOne](https://github.com/OshyOne)
 
 ## Features
 
@@ -118,7 +122,10 @@ If using Normal Mode, your bot may be flagged by Discord. To resolve this:
 Unverified bots cannot mass DM servers with more than 1,000 members. Ensure your bot is verified for such actions.
 
 ## Contact
+
 Discord: baliizphp
-GitHub: BaliizTheBg
+
+GitHub: https://github.com/baliizthebg
+
 
 
