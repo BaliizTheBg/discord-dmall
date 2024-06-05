@@ -6,6 +6,11 @@ Inspired by :
  - [Ituriel](https://github.com/nulledituriel)
  - [OshyOne](https://github.com/OshyOne)
 
+This is the original source code, make sure you follow the licence when you're using it.
+
+Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
+
+
 ## Features
 
 - **DM Modes:**
