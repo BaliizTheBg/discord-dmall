@@ -1,0 +1,20 @@
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: JSP#7225 - DiscordAPIError: Cannot send messages to this user
+DM Error: User: iyori [+]#2581 - DiscordAPIError: Cannot send messages to this user
