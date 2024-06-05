@@ -77,6 +77,10 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
 
  1. **Start the script:**
     ```sh
+    npm start
+
+or 
+   
     npm run start
 
  2. **Choose the mode:**
