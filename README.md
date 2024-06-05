@@ -25,6 +25,26 @@ DMall is a powerful tool designed to send mass messages to all members of a Disc
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/BaliizTheBg/discord-dmall.git
-```sh
-cd discord-dmall
+
+2. **Navigate to the directory:**   
+   ```sh
+   cd discord-dmall
+
+3. **Install the dependencies:**
+   ```sh
+   npm install
+   
+4. **Configure the bot:** Add your bot token and message in the '**settings.json**' file
+   ```json
+   {
+  "token": "YOUR_BOT_TOKEN",
+  "message": {
+    "content": "Your message here"
+  },
+  "owner": "YOUR_OWNER_ID",
+  "exclude_ids": ["ID1", "ID2"],
+  "message_limit": 1000,
+  "batch_size": 10
+}
+
 
