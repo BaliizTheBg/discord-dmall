@@ -20,7 +20,7 @@ const { token, message, owner, exclude_ids = [], message_limit = Infinity, batch
 // When the bot is ready, print a message and set activity
 client.on('ready', () => {
   console.log(chalk.blue('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
-  console.log(chalk.blue(client.user.username + ' connecté'));
+  console.log(chalk.blue(client.user.username + ' connected'));
   console.log(chalk.magenta('Mass DM:'));
 
   client.user.setActivity('BALIIZ !', {
