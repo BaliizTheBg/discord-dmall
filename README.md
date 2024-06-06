@@ -42,8 +42,12 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
 3. **Install the dependencies:**
    ```sh
    npm install
-   
-4. **Configure the bot:** Add your bot token and message in the '**settings.json**' file
+
+4. **Install this also:**
+   ```sh
+   npm install figlet gradient-string
+
+5. **Configure the bot:** Add your bot token and message in the '**settings.json**' file
    ```json
    { "token": "YOUR_BOT_TOKEN", 
    "message": { "content": "Your message here" }, 
@@ -52,7 +56,7 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
    "message_limit": 1000, 
    "batch_size": 10 }
 
-5. **Configure the webhook in** 'script.js': Replace the placeholder webhook ID and token in the script.js file with your actual webhook ID and token in the following two places:
+6. **Configure the webhook in** 'script.js': Replace the placeholder webhook ID and token in the script.js file with your actual webhook ID and token in the following two places:
 
    ```javascript
    // Place 1: Near the top of the file
@@ -87,6 +91,13 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
  2. **Choose the mode:**
     - Type '1' for Normal Mode.
     - Type '2' for Timeout Mode.
+   
+  2. **Enter Server ID:**
+
+     Copy and paste the serverID of the server you are wishing to dmall.
+     (The bot you are going to use must have admin permission on the server you want to dmall)
+
+
 
  ## Additional Features
 
