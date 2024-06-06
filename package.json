@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BaliizTheBg"
+    "url": "https://github.com/BaliizTheBg/discord-dmall"
   },
   "author": "Baliiz",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BaliizTheBg"
   },
-  "homepage": "https://github.com/BaliizTheBg",
+  "homepage": "https://github.com/BaliizTheBg/discord-dmall",
   "dependencies": {
     "chalk": "^4.1.2",
     "discord.js": "^12.5.3",
