@@ -82,7 +82,6 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
 
  **Or you can use :**
 
-    ```sh
     npm run start
 
  2. **Choose the mode:**
