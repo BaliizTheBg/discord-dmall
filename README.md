@@ -134,6 +134,6 @@ Unverified bots cannot mass DM servers with more than 1,000 members. Ensure your
 
 ## Contact
 
-Discord: baliizphp
+Discord: [baliizphp](https://discord.com/users/902994544881180753)
 
 GitHub: [BaliizTheBg](https://github.com/BaliizTheBg)
