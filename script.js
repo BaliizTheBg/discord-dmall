@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * 
 *                                *
-*           Mass DM              *
+*             DMALL              *
 *        Author: Baliiz          *
 *       Discord: baliizphp       *
 *                                *
@@ -8,6 +8,7 @@
 
 const { Client, WebhookClient, MessageEmbed } = require('discord.js');
 const chalk = require('chalk');
+const gradient = require('gradient-string');
 const { red, yellow, greenBright, yellowBright } = require('chalk');
 const readline = require('readline').createInterface({
   input: process.stdin,
@@ -17,9 +18,24 @@ const fs = require('fs');
 const client = new Client();
 const { token, message, owner, exclude_ids = [], message_limit = Infinity, batch_size = 1 } = require('./settings.json');
 
+// Function to create a colored ASCII art
+function createAsciiArt() {
+  console.log(chalk.blue('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+  const asciiArt = `
+    ____        _ _ _     _____ _          ____        
+   | __ )  __ _| (_|_)___|_   _| |__   ___| __ )  __ _ 
+   |  _ \\ / _\` | | | |_  / | | | '_ \\ / _ \\  _ \\ / _\` |
+   | |_) | (_| | | | |/ /  | | | | | |  __/ |_) | (_| |
+   |____/ \\__,_|_|_|_/___| |_| |_| |_|\\___|____/ \\__, |
+                                                 |___/ 
+  `;
+  console.log(gradient.pastel.multiline(asciiArt));
+  console.log(chalk.blue('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+}
+
 // When the bot is ready, print a message and set activity
 client.on('ready', () => {
-  console.log(chalk.blue('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
+  createAsciiArt();
   console.log(chalk.blue(client.user.username + ' connected'));
   console.log(chalk.magenta('Mass DM:'));
 
@@ -43,7 +59,7 @@ client.on('ready', async () => {
 
 // Main function to choose the mode and handle user input
 function Main() {
-  console.log(chalk.blue('Mass DM:'));
+  console.log(chalk.magenta('Mass DM:'));
   console.log('Options:');
   console.log('  [1] Normal Mode');
   console.log('  [2] Timeout Mode');
@@ -72,7 +88,7 @@ function Main() {
                 if (delay >= 3000 && delay <= 9000) { // Adjusted valid range
                   console.log(greenBright('Users Scraped'));
                   MassDMTimeOut(delay, message).then(() => {
-                    console.log(yellow('Waarning : Restarting.'));
+                    console.log(yellow('Warning : Restarting.'));
                     setTimeout(() => process.exit(1), 2000);
                   });
                 } else {
@@ -98,12 +114,19 @@ async function ScrapeUsers(guildId) {
   try {
     const guild = await client.guilds.fetch(guildId);
     let userIds = guild.members.cache.map(member => member.id);
-    if (exclude_ids.length > 0) {
-      userIds = userIds.filter(id => !exclude_ids.includes(id)); // Exclude specified users
-    }
-    console.log(yellowBright('Fetched ' + userIds.length + ' Users'));
 
-    const data = { IDs: userIds };
+    // Log all fetched user IDs
+    console.log(`All fetched user IDs: ${userIds.join(', ')}`);
+
+    // Exclude specified users
+    console.log(`Excluding the following IDs: ${exclude_ids.join(', ')}`);
+    const filteredUserIds = userIds.filter(id => !exclude_ids.includes(id));
+
+    // Log after exclusion
+    console.log(`User IDs after exclusion: ${filteredUserIds.join(', ')}`);
+    console.log(yellowBright(`Fetched ${filteredUserIds.length} Users after exclusion`));
+
+    const data = { IDs: filteredUserIds };
     fs.writeFileSync('./scraped.json', JSON.stringify(data, null, 2));
     console.log(greenBright('Successfully written to ./scraped.json'));
   } catch (error) {
@@ -138,42 +161,6 @@ async function sendMessageWithRetry(user, message, retries = 3) {
   }
 }
 
-// Mass DM function for Timeout Mode
-function MassDMTimeOut(delay, message) {
-  return new Promise((resolve, reject) => {
-    const scraped = require('./scraped.json');
-    let userIds = scraped.IDs;
-    if (message_limit !== Infinity) {
-      userIds = userIds.slice(0, message_limit); // Limit the number of messages
-    }
-
-    let promises = [];
-    let batchCount = 0;
-
-    userIds.forEach((userId, index) => {
-      if (batch_size > 1 && index % batch_size === 0) batchCount++; // Track batch count
-      promises.push(
-        new Promise((res, rej) => {
-          setTimeout(() => {
-            client.users.fetch(userId)
-              .then(user => sendMessageWithRetry(user, message).then(res).catch(rej))
-              .catch(error => {
-                console.log(red('Fetching User Error: ' + error));
-                logErrorToFile(`Fetching User Error: ${userId} - ${error}`);
-                res();
-              });
-          }, delay * (index + batchCount * batch_size)); // Delay between batches if batch_size is greater than 1
-        })
-      );
-    });
-
-    Promise.all(promises).then(() => {
-      sendSummaryToWebhook(userIds.length);
-      resolve();
-    }).catch(reject);
-  });
-}
-
 // Mass DM function for Normal Mode
 function MassDMNormal(message) {
   return new Promise((resolve, reject) => {
@@ -182,6 +169,9 @@ function MassDMNormal(message) {
     if (message_limit !== Infinity) {
       userIds = userIds.slice(0, message_limit); // Limit the number of messages
     }
+
+    // Log the user IDs to be messaged
+    console.log(`User IDs to be messaged: ${userIds.join(', ')}`);
 
     let promises = [];
     let batchCount = 0;
@@ -199,6 +189,45 @@ function MassDMNormal(message) {
                 res();
               });
           }, batchCount * batch_size); // Delay between batches if batch_size is greater than 1
+        })
+      );
+    });
+
+    Promise.all(promises).then(() => {
+      sendSummaryToWebhook(userIds.length);
+      resolve();
+    }).catch(reject);
+  });
+}
+
+// Mass DM function for Timeout Mode
+function MassDMTimeOut(delay, message) {
+  return new Promise((resolve, reject) => {
+    const scraped = require('./scraped.json');
+    let userIds = scraped.IDs;
+    if (message_limit !== Infinity) {
+      userIds = userIds.slice(0, message_limit); // Limit the number of messages
+    }
+
+    // Log the user IDs to be messaged
+    console.log(`User IDs to be messaged: ${userIds.join(', ')}`);
+
+    let promises = [];
+    let batchCount = 0;
+
+    userIds.forEach((userId, index) => {
+      if (batch_size > 1 && index % batch_size === 0) batchCount++; // Track batch count
+      promises.push(
+        new Promise((res, rej) => {
+          setTimeout(() => {
+            client.users.fetch(userId)
+              .then(user => sendMessageWithRetry(user, message).then(res).catch(rej))
+              .catch(error => {
+                console.log(red('Fetching User Error: ' + error));
+                logErrorToFile(`Fetching User Error: ${userId} - ${error}`);
+                res();
+              });
+          }, delay * (index + batchCount * batch_size)); // Delay between batches if batch_size is greater than 1
         })
       );
     });
