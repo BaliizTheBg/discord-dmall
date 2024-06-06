@@ -6,5 +6,5 @@
   "owner": "OWNER-ID",
   "exclude_ids": [],
   "message_limit": 1000,
-  "batch_size": 10
+  "batch_size": 30
 }
