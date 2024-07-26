@@ -4,7 +4,5 @@
       "content": "Your message here."
   },
   "owner": "OWNER-ID",
-  "exclude_ids": [],
-  "message_limit": 1000,
-  "batch_size": 30
+  "message_limit": 10000
 }
