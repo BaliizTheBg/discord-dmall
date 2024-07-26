@@ -17,11 +17,9 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
   - **Normal Mode:** Rapid message sending (less than a second between each user).
   - **Timeout Mode:** Delay of 3 to 9 seconds between each message to minimize the risk of being flagged for spam by Discord.
 - **Security:** Bypasses Discord's anti-spam flags.
-- **ID Exclusion:** Ability to exclude specific IDs from message sends. **(Not working at the moment)**
 - **Logging:** Log file to track sent messages.
 - **Webhook Summary:** Use a webhook to receive a summary of sent messages.
 - **Message Limits:** Define a maximum number of messages to send.
-- **Batch Sending:** Send messages in batches for more efficient management.
 
 ## Prerequisites
 
@@ -52,9 +50,7 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
    { "token": "YOUR_BOT_TOKEN", 
    "message": { "content": "Your message here" }, 
    "owner": "YOUR_OWNER_ID", 
-   "exclude_ids": ["ID1", "ID2"], 
-   "message_limit": 1000, 
-   "batch_size": 10 }
+   "message_limit": 1000
 
 6. **Configure the webhook in** 'script.js': Replace the placeholder webhook ID and token in the script.js file with your actual webhook ID and token in the following two places:
 
@@ -101,10 +97,6 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
 
  ## Additional Features
 
-  - **ID Exclusion** (Not Working at the moment)
- 
- Exclude specific users from receiving messages by adding their IDs to the **'exclude_ids'** array in **settings.json**.
-
   - **Logging**
 
  All sent messages are logged in a file named **'log.txt'** to track DM activities.
@@ -116,10 +108,6 @@ A summary of sent messages is sent to a specified webhook configured in **'setti
   - **Message Limits**
 
 Set a maximum number of messages to send by configuring message_limit in **`settings.json'**.
-
-  - **Batch Sending**
-
-Send messages in batches for more efficient management by configuring **'batch_size'** in **'settings.json'**
 
 ## How It Works
 
