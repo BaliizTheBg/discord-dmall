@@ -50,7 +50,7 @@ Created by : [BaliizTheBg](https://github.com/BaliizTheBg)
    { "token": "YOUR_BOT_TOKEN", 
    "message": { "content": "Your message here" }, 
    "owner": "YOUR_OWNER_ID", 
-   "message_limit": 1000
+   "message_limit": 10000
 
 6. **Configure the webhook in** 'script.js': Replace the placeholder webhook ID and token in the script.js file with your actual webhook ID and token in the following two places:
 
